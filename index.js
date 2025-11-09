@@ -39,7 +39,27 @@ async function run() {
       const result = await coursecollection.findOne(query);
       res.send(result);
     });
-    
+    app.post("/courses", async (req, res) => {
+      const newp = req.body;
+      const result = await coursecollection.insertOne(newp);
+      res.send(result);
+    });
+    app.delete("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const queary = { _id: new ObjectId(id) };
+      const result = await coursecollection.deleteOne(queary);
+      res.send(result);
+    });
+    app.patch("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const newp = req.body;
+      const query = { _id: new ObjectId(id) };
+      const update = {
+        $set: newp,
+      };
+      const result = await coursecollection.updateOne(query, update);
+      res.send(result);
+    });
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
