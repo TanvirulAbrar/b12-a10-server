@@ -51,7 +51,7 @@ async function run() {
       const query = { email: newp.email };
       const data = await enrolledcollection.findOne(query);
       if (data) {
-        console.log("hitted");
+        // console.log("hitted");
         return res.send(data);
       }
       const result = await enrolledcollection.insertOne(newp);
@@ -66,6 +66,12 @@ async function run() {
       };
       console.log("id update hit");
       const result = await enrolledcollection.updateOne(query, update);
+      res.send(result);
+    });
+    app.delete("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const queary = { _id: new ObjectId(id) };
+      const result = await enrolledcollection.deleteOne(queary);
       res.send(result);
     });
     // course
