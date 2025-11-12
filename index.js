@@ -52,7 +52,7 @@ async function run() {
       const data = await enrolledcollection.findOne(query);
       if (data) {
         console.log("hitted");
-        return res.send("already added");
+        return res.send(data);
       }
       const result = await enrolledcollection.insertOne(newp);
       res.send(result);
@@ -64,6 +64,7 @@ async function run() {
       const update = {
         $set: newp,
       };
+      console.log("id update hit");
       const result = await enrolledcollection.updateOne(query, update);
       res.send(result);
     });
